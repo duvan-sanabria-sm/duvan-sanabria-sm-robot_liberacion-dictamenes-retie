@@ -1,0 +1,67 @@
+{
+  "assemblyStates": {
+    "C7203892ffe6a4a579d0.Q5K1g2P0FgK1nlfUA31uzub4": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C7203892ffe6a4a579d06017c54d486d2_record__v1.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C7203892ffe6a4a579d06017c54d486d2_record__v1",
+        "hash": "UVlCclRDUnZybzNPQUN3dXd4eGtIWFVqTngrYmhpdUsrVU44RGlHWVUvT0pVaVVwMEk0alRHVmcyTzhmMUZ3ZWNqWjBjdE43V05Odk9Ca3Y5ekpsOFE9PQ",
+        "assemblyName": "C7203892ffe6a4a579d0.Q5K1g2P0FgK1nlfUA31uzub4"
+      }
+    },
+    "Ce71ed818859e4960aad.gcrnv4MLRJ1MGupP1qtINT1": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.Ce71ed818859e4960aad140be5d98b760_record__v1__customer.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.Ce71ed818859e4960aad140be5d98b760_record__v1__customer",
+        "hash": "RlJnQWp0WnE5RzhNbjVVelR5Qjg3RTlkK3hndVdhYVhWVmxHWnFvWDFYTitsZURvSnBTZ0JybGQ2cS9hVHVBQU9tVkNpQWxoZnp0UGJxOXZOVXZJR0E9PQ",
+        "assemblyName": "Ce71ed818859e4960aad.gcrnv4MLRJ1MGupP1qtINT1"
+      }
+    },
+    "C466d2b8a2989430585a.qVMgWkGypJ1x0Czc2hTgnx1": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C466d2b8a2989430585a2c879a37c7078_record__v1__invoice__item.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C466d2b8a2989430585a2c879a37c7078_record__v1__invoice__item",
+        "hash": "YkNkR3A2ZEkwZlB2Nk03S05KVlB6UjN2NTlSdllhcU9NSXRURU51Ylg2SzNMbWRxZVRXczRnMzUrR1Y5SFBZdXZSQWFUZ2hvVE00OTQ2cGZpMjgzU3c9PQ",
+        "assemblyName": "C466d2b8a2989430585a.qVMgWkGypJ1x0Czc2hTgnx1"
+      }
+    },
+    "C466d2b8a2989430585a.Mthswn5ToF1wAek34EHfpZ": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C466d2b8a2989430585a2c879a37c7078_record__v1.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C466d2b8a2989430585a2c879a37c7078_record__v1",
+        "hash": "YWVuY3BUUDlnQWpPM0QvTkQ2Wjh1dDhrYk14ZGJQWjQ2b3ZOTWtCWFJMcXNMSVdRbUY5L3pkOXZpcWxNd2RxZXY2d0RIekFiS3NOS3IrMjZsbFIwTUE9PQ",
+        "assemblyName": "C466d2b8a2989430585a.Mthswn5ToF1wAek34EHfpZ"
+      }
+    },
+    "C466d2b8a2989430585a.qxNsO1bDcFE1weaBcV4qij3": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C466d2b8a2989430585a2c879a37c7078_record.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C466d2b8a2989430585a2c879a37c7078_record",
+        "hash": "U2wyWlhpK3ZPYktKamYybHBEd0E5RXNhbnZqMHBmMitPa252OW1WSnNlVGxJRkZJcUVlQzUzdkcrQ3dlWDZqOVYvT0ZRakxURVRmMy94WjhkWFphd2c9PQ",
+        "assemblyName": "C466d2b8a2989430585a.qxNsO1bDcFE1weaBcV4qij3"
+      }
+    },
+    "C74e7ced760014c78996.kWosF3QD1wI1L15hx1EoLnh3": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C74e7ced760014c78996093c64d8fdf6e_record.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C74e7ced760014c78996093c64d8fdf6e_record",
+        "hash": "U2wyWlhpK3ZPYktKamYybHBEd0E5RXNhbnZqMHBmMitPa252OW1WSnNlVGxJRkZJcUVlQzUzdkcrQ3dlWDZqOVYvT0ZRakxURVRmMy94WjhkWFphd2c9PQ",
+        "assemblyName": "C74e7ced760014c78996.kWosF3QD1wI1L15hx1EoLnh3"
+      }
+    },
+    "C74e7ced760014c78996.zltKH1LH5WH1rvMBV3KdzmK": {
+      "namespace": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C74e7ced760014c78996093c64d8fdf6e_record__v1.Bundle",
+      "providerName": "CustomEntities",
+      "key": {
+        "name": "UiPath.ConnectorBuilder.IntegrationService.Activities.SWEntities.C74e7ced760014c78996093c64d8fdf6e_record__v1",
+        "hash": "YWVuY3BUUDlnQWpPM0QvTkQ2Wjh1dDhrYk14ZGJQWjQ2b3ZOTWtCWFJMcXNMSVdRbUY5L3pkOXZpcWxNd2RxZXY2d0RIekFiS3NOS3IrMjZsbFIwTUE9PQ",
+        "assemblyName": "C74e7ced760014c78996.zltKH1LH5WH1rvMBV3KdzmK"
+      }
+    }
+  }
+}
