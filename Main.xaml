@@ -192,7 +192,11 @@
       <Variable x:TypeArguments="njl:JObject" Name="data_factura_json" />
       <Variable x:TypeArguments="njl:JObject" Name="factura_json" />
       <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="collection_matches_lotes" />
-      <Variable x:TypeArguments="s:String[]" Default="[{&quot;3175 MASSY ENERGY COLOMBIA SAS&quot;, &quot;243 APIROS S.A.S.&quot;, &quot;800 FALABELLA DE COLOMBIA SA&quot;, &quot;182 AMARILO SAS&quot;, &quot;707 CONSTRUCTORA COLPATRIA SAS&quot;}]" Name="ARRAY_CLIENTES_VIP" />
+      <Variable x:TypeArguments="s:String[]" Name="ARRAY_CLIENTES_VIP">
+        <Variable.Default>
+          <VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{&quot;3175 MASSY ENERGY COLOMBIA SAS&quot;, &quot;243 APIROS S.A.S.&quot;, &quot;800 FALABELLA DE COLOMBIA SA&quot;, &quot;182 AMARILO SAS&quot;, &quot;707 CONSTRUCTORA COLPATRIA SAS&quot;,&quot;1003 ERCO ENERGIA S.A.S&quot;}" />
+        </Variable.Default>
+      </Variable>
       <Variable x:TypeArguments="njl:JObject" Name="data_linea_lotes" />
       <Variable x:TypeArguments="njl:JObject" Name="data_proforma_json" />
       <Variable x:TypeArguments="njl:JToken[]" Name="array_results_fact" />
@@ -238,7 +242,7 @@
           <av:PointCollection x:Key="ConnectorLocation">620,185 620,225</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence DisplayName="Obtener Tokens" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_452">
+      <Sequence DisplayName="Solicitud de acceso a datos Netsuite" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_452">
         <Sequence.Variables>
           <Variable x:TypeArguments="x:String" Default="https://5845631.app.netsuite.com/app/login/oauth2/authorize.nl?scope=restlets+rest_webservices&amp;response_type=code&amp;redirect_uri=https%3A%2F%2Fcloud.uipath.com%2Fprovisioning_%2Fcallback&amp;state=cmVkaXJlY3RVcmw9aHR0cHM6Ly9jbG91ZC51aXBhdGguY29tL3NlcnZpd3JnZWxoYy9kZWZhdWx0dGVuYW50L3Byb3Zpc2lvbmluZ18vY2FsbGJhY2ssaWQ9ZGQ4MGE4YjctNWFmOC00MGNiLWIyOTUtNjhlNDJhOWMxYzQyLGVsZW1lbnRLZXk9ZGVzaWduLWRlc2lnbi1yZXN0bnMsZGVjb2RlQ29kZT1mYWxzZSxsYW5nPQ&amp;client_id=e4ad363ecbbc492a3f1dc39422bf70748c382245b438a9a60f3c33ddc919b223" Name="URL_CODE_TOKEN" />
           <Variable x:TypeArguments="x:String" Name="url_response_token" />
@@ -459,7 +463,7 @@
               <av:PointCollection x:Key="ConnectorLocation">620,295 620,335</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <Sequence DisplayName="Extraer Dict Sin Liberar" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_448">
+          <Sequence DisplayName="Extraer dictámenes sin liberar" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_448">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:String" Name="indexRow" />
               <Variable x:TypeArguments="x:String" Name="fecha_filtro" />
@@ -659,7 +663,7 @@
                   <av:PointCollection x:Key="ConnectorLocation">620,405 620,445</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Sequence DisplayName="Validar Lotes Facturados" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_449">
+              <Sequence DisplayName="Validar lotes facturados" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_449">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="s:String[]" Default="[{&quot;&quot;}]" Name="lotes_array" />
                   <Variable x:TypeArguments="x:String" Name="lotes" />
@@ -3096,7 +3100,7 @@
                       <av:PointCollection x:Key="ConnectorLocation">620,515 620,555</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <Sequence DisplayName="Exportar DataTable a CSV" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_450">
+                  <Sequence DisplayName="Exportar tabla de datos a CSV" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_450">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -3171,7 +3175,7 @@
                           <av:PointCollection x:Key="ConnectorLocation">620,625 620,665</av:PointCollection>
                         </scg:Dictionary>
                       </sap:WorkflowViewStateService.ViewState>
-                      <Sequence DisplayName="Copiar Data a Excel" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_427">
+                      <Sequence DisplayName="Copiar datos al Excel" sap:VirtualizedContainerService.HintSize="110,70" sap2010:WorkflowViewState.IdRef="Sequence_427">
                         <Sequence.Variables>
                           <Variable x:TypeArguments="x:String" Default="https://servimeters-my.sharepoint.com/personal/asistente_tesoreria_servimeters_com/Documents/estadodictamenes/Proceso%20Dict%C3%A1menes%20Digital%202024%20Segundo%20Semestre.xlsx?web=1" Name="RUTA_INFORME_ORIGINAL" />
                         </Sequence.Variables>
