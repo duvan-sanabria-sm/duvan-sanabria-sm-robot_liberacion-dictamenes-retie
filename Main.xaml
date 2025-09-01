@@ -189,7 +189,7 @@
       <AssemblyReference>NPOI.Core</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart DisplayName="Diagrama de flujo" sap:VirtualizedContainerService.HintSize="995,343.04" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+  <Flowchart DisplayName="Diagrama de flujo" sap:VirtualizedContainerService.HintSize="904,592.04" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.Variables>
       <Variable x:TypeArguments="x:String" Name="RUTA_INFORME_COPIA" />
       <Variable x:TypeArguments="x:String" Default="DOC. SEG. ANTIGUO" Name="NOMBRE_HOJA_INFORME" />
@@ -199,7 +199,13 @@
       <Variable x:TypeArguments="x:String" Name="responseAPI" />
       <Variable x:TypeArguments="njl:JObject" Name="JSON_POST" />
       <Variable x:TypeArguments="x:Int32" Name="statusResponseAPI" />
-      <Variable x:TypeArguments="x:String" Default="{}{&#xA;  'q': 'SELECT CUSTOMRECORD_BIT_REPORTE_CARTERA.*, transaction.id, transaction.dueDate, transaction.terms, transaction.memo FROM CUSTOMRECORD_BIT_REPORTE_CARTERA INNER JOIN transaction ON (transaction.id = CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_id_trasaccion) INNER JOIN transactionLine ON (transaction.id = transactionLine.transaction) AND transactionLine.mainLine=YYYYY WHERE XXXXX'&#xA;}" Name="QUERY_API_FACTURA" />
+      <Variable x:TypeArguments="x:String" Name="QUERY_API_FACTURA">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" xml:space="preserve">{
+  'q': 'SELECT CUSTOMRECORD_BIT_REPORTE_CARTERA.*, transaction.id, transaction.dueDate, transaction.terms, transaction.memo FROM CUSTOMRECORD_BIT_REPORTE_CARTERA INNER JOIN transaction ON (transaction.id = CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_id_trasaccion) INNER JOIN transactionLine ON (transaction.id = transactionLine.transaction) AND transactionLine.mainLine=YYYYY WHERE XXXXX'
+}</Literal>
+        </Variable.Default>
+      </Variable>
       <Variable x:TypeArguments="njl:JObject" Name="data_factura_json" />
       <Variable x:TypeArguments="njl:JObject" Name="factura_json" />
       <Variable x:TypeArguments="scg:IEnumerable(str:Match)" Name="collection_matches_lotes" />
@@ -209,7 +215,13 @@
       <Variable x:TypeArguments="njl:JToken[]" Name="array_results_fact" />
       <Variable x:TypeArguments="x:Boolean" Default="True" Name="es_anulado" />
       <Variable x:TypeArguments="x:String" Name="observacion" />
-      <Variable x:TypeArguments="x:String" Default="{}{&#xA;  'q': 'SELECT CUSTOMRECORD_BIT_REPORTE_PROFORMA.*, transaction.id, BUILTIN.DF(transactionLine.createdFrom) as createdFrom FROM CUSTOMRECORD_BIT_REPORTE_PROFORMA INNER JOIN transaction ON (CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_transaction = transaction.id) INNER JOIN transaction t ON (transaction.custbody_ks_os = t.id) INNER JOIN transactionLine ON (t.id = transactionLine.transaction) AND transactionLine.mainLine=YYYYY WHERE (CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_lote_sm LIKE %||XXXXX||% OR BUILTIN.DF(transactionLine.cseg2)=XXXXX OR BUILTIN.DF(transactionLine.createdFrom) LIKE %||XXXXX||%) AND (CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_centro_de_costo LIKE %||RETIE||% OR CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_centro_de_costo LIKE %||RETILAP||%)'&#xA;}" Name="QUERY_API_PROFORMAS" />
+      <Variable x:TypeArguments="x:String" Name="QUERY_API_PROFORMAS">
+        <Variable.Default>
+          <Literal x:TypeArguments="x:String" xml:space="preserve">{
+  'q': 'SELECT CUSTOMRECORD_BIT_REPORTE_PROFORMA.*, transaction.id, BUILTIN.DF(transactionLine.createdFrom) as createdFrom FROM CUSTOMRECORD_BIT_REPORTE_PROFORMA INNER JOIN transaction ON (CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_transaction = transaction.id) INNER JOIN transaction t ON (transaction.custbody_ks_os = t.id) INNER JOIN transactionLine ON (t.id = transactionLine.transaction) AND transactionLine.mainLine=YYYYY WHERE (CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_lote_sm LIKE %||XXXXX||% OR BUILTIN.DF(transactionLine.cseg2)=XXXXX OR BUILTIN.DF(transactionLine.createdFrom) LIKE %||XXXXX||%) AND (CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_centro_de_costo LIKE %||RETIE||% OR CUSTOMRECORD_BIT_REPORTE_PROFORMA.custrecord_bit_centro_de_costo LIKE %||RETILAP||%)'
+}</Literal>
+        </Variable.Default>
+      </Variable>
       <Variable x:TypeArguments="x:String" Name="TOKEN_API_NS">
         <Variable.Default>
           <Literal x:TypeArguments="x:String" Value="" />
@@ -226,6 +238,7 @@
       <Variable x:TypeArguments="x:Boolean" Default="False" Name="es_igual_lote" />
       <Variable x:TypeArguments="x:String" Default="\\10.10.15.120\DatosContabilidad\CONTABILIDAD\RESULTADOS ROBOT LIB. DICTAMENES\RETIE" Name="RUTA_RESULTS_SERVER" />
       <Variable x:TypeArguments="x:Boolean" Default="True" Name="RECHAZO_POR_PAGO" />
+      <Variable x:TypeArguments="x:String" Name="outAuthHeader" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -676,7 +689,7 @@
                   <av:PointCollection x:Key="ConnectorLocation">620,405 620,445</av:PointCollection>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <Sequence DisplayName="Validar lotes facturados" sap:VirtualizedContainerService.HintSize="1476,13926" sap2010:WorkflowViewState.IdRef="Sequence_449">
+              <Sequence DisplayName="Validar lotes facturados" sap:VirtualizedContainerService.HintSize="1476,15209" sap2010:WorkflowViewState.IdRef="Sequence_449">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="s:String[]" Default="[{&quot;&quot;}]" Name="lotes_array" />
                   <Variable x:TypeArguments="x:String" Name="lotes" />
@@ -689,19 +702,19 @@
                     <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <Sequence sap:VirtualizedContainerService.HintSize="1442,13818" sap2010:WorkflowViewState.IdRef="Sequence_421">
+                <Sequence sap:VirtualizedContainerService.HintSize="1442,15101" sap2010:WorkflowViewState.IdRef="Sequence_421">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dataTable_resultadosInforme]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1408,13726" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
+                  <ui:ForEachRow ColumnNames="{x:Null}" CurrentIndex="{x:Null}" DataTable="[dataTable_resultadosInforme]" DisplayName="For Each Row in Data Table" sap:VirtualizedContainerService.HintSize="1408,15009" sap2010:WorkflowViewState.IdRef="ForEachRow_4">
                     <ui:ForEachRow.Body>
                       <ActivityAction x:TypeArguments="sd:DataRow">
                         <ActivityAction.Argument>
                           <DelegateInArgument x:TypeArguments="sd:DataRow" Name="CurrentRow" />
                         </ActivityAction.Argument>
-                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1374,13539" sap2010:WorkflowViewState.IdRef="Sequence_420">
+                        <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1374,14822" sap2010:WorkflowViewState.IdRef="Sequence_420">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -781,20 +794,20 @@
                               </If.Else>
                             </If>
                           </Sequence>
-                          <Sequence DisplayName="Informacion de Lotes" sap:VirtualizedContainerService.HintSize="1340,12222" sap2010:WorkflowViewState.IdRef="Sequence_419">
+                          <Sequence DisplayName="Informacion de Lotes" sap:VirtualizedContainerService.HintSize="1340,13505" sap2010:WorkflowViewState.IdRef="Sequence_419">
                             <sap:WorkflowViewStateService.ViewState>
                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                               </scg:Dictionary>
                             </sap:WorkflowViewStateService.ViewState>
-                            <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each Lotes" sap:VirtualizedContainerService.HintSize="1306,10685" sap2010:WorkflowViewState.IdRef="ForEach`1_27" Values="[lotes_array]">
+                            <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each Lotes" sap:VirtualizedContainerService.HintSize="1306,11968" sap2010:WorkflowViewState.IdRef="ForEach`1_27" Values="[lotes_array]">
                               <ui:ForEach.Body>
                                 <ActivityAction x:TypeArguments="x:String">
                                   <ActivityAction.Argument>
                                     <DelegateInArgument x:TypeArguments="x:String" Name="currentItem" />
                                   </ActivityAction.Argument>
-                                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1108,10539" sap2010:WorkflowViewState.IdRef="Sequence_283">
+                                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="1108,11822" sap2010:WorkflowViewState.IdRef="Sequence_283">
                                     <Sequence.Variables>
                                       <Variable x:TypeArguments="x:String" Name="NEW_QUERY_API" />
                                     </Sequence.Variables>
@@ -863,7 +876,7 @@
                                         </Assign.Value>
                                       </Assign>
                                     </Sequence>
-                                    <Sequence DisplayName="Llamada API Facturas" sap:VirtualizedContainerService.HintSize="1074,1151" sap2010:WorkflowViewState.IdRef="Sequence_298">
+                                    <Sequence DisplayName="Llamada API Facturas" sap:VirtualizedContainerService.HintSize="1074,1688" sap2010:WorkflowViewState.IdRef="Sequence_298">
                                       <Sequence.Variables>
                                         <Variable x:TypeArguments="x:String" Name="sds" />
                                         <Variable x:TypeArguments="x:String" Name="inConsumerKey" />
@@ -873,7 +886,6 @@
                                         <Variable x:TypeArguments="x:String" Name="inRealm" />
                                         <Variable x:TypeArguments="x:String" Name="inUrl" />
                                         <Variable x:TypeArguments="x:String" Name="inMethod" />
-                                        <Variable x:TypeArguments="x:String" Name="outAuthHeader" />
                                       </Sequence.Variables>
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -881,15 +893,15 @@
                                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                         </scg:Dictionary>
                                       </sap:WorkflowViewStateService.ViewState>
-                                      <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim queryStr As String = jsonObject(&quot;q&quot;).ToString&#xA;queryStr = queryStr.Replace(&quot;XXXXX&quot;, &quot;(CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_lote LIKE '%'||'XXXXX'||'%' OR transaction.memo LIKE '%'||'XXXXX'||'%' OR BUILTIN.DF(transactionLine.cseg2)='XXXXX') AND (CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_centro_costo LIKE '%'||'RETIE'||'%' OR CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_centro_costo LIKE '%'||'RETILAP'||'%')&quot;)&#xA;queryStr = queryStr.Replace(&quot;XXXXX&quot;, lote)&#xA;queryStr = queryStr.Replace(&quot;YYYYY&quot;, &quot;'T'&quot;)&#xA;jsonObject(&quot;q&quot;) = queryStr&#xA;Dim modifiedJson As String = jsonObject.ToString&#xA;query = modifiedJson" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="416,197" sap2010:WorkflowViewState.IdRef="InvokeCode_15">
+                                      <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_41" JsonObject="[JSON_POST]" JsonString="[QUERY_API_FACTURA]" />
+                                      <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim queryStr As String = jsonObject(&quot;q&quot;).ToString&#xA;queryStr = queryStr.Replace(&quot;XXXXX&quot;, &quot;(CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_lote LIKE '%'||'XXXXX'||'%' OR transaction.memo LIKE '%'||'XXXXX'||'%' OR BUILTIN.DF(transactionLine.cseg2)='XXXXX') AND (CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_centro_costo LIKE '%'||'RETIE'||'%' OR CUSTOMRECORD_BIT_REPORTE_CARTERA.custrecord_bit_centro_costo LIKE '%'||'RETILAP'||'%')&quot;)&#xA;queryStr = queryStr.Replace(&quot;XXXXX&quot;, lote)&#xA;queryStr = queryStr.Replace(&quot;YYYYY&quot;, &quot;'T'&quot;)&#xA;jsonObject(&quot;q&quot;) = queryStr&#xA;Dim modifiedJson As String = jsonObject.ToString&#xA;query = modifiedJson" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="518,197" sap2010:WorkflowViewState.IdRef="InvokeCode_15">
                                         <ui:InvokeCode.Arguments>
                                           <InArgument x:TypeArguments="njl:JObject" x:Key="jsonObject">[JSON_POST]</InArgument>
                                           <InArgument x:TypeArguments="x:String" x:Key="lote">[currentItem]</InArgument>
                                           <OutArgument x:TypeArguments="x:String" x:Key="query">[NEW_QUERY_API]</OutArgument>
                                         </ui:InvokeCode.Arguments>
                                       </ui:InvokeCode>
-                                      <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="416,122" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_41" JsonObject="[JSON_POST]" JsonString="[QUERY_API_FACTURA]" />
-                                      <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Genera Authorization para NetSuite (OAuth 1.0a + HMAC-SHA256)&#xD;&#xA;&#xD;&#xA;inConsumerKey = inConsumerKey.Trim()&#xD;&#xA;inConsumerSecret = inConsumerSecret.Trim()&#xD;&#xA;inToken = inToken.Trim()&#xD;&#xA;inTokenSecret = inTokenSecret.Trim()&#xD;&#xA;inRealm = inRealm.Trim()&#xD;&#xA;inUrl = inUrl.Trim()&#xD;&#xA;inMethod = inMethod.Trim().ToUpperInvariant()&#xD;&#xA;&#xD;&#xA;Dim epoch As New DateTime(1970,1,1,0,0,0, DateTimeKind.Utc)&#xD;&#xA;Dim ts As String = CLng((DateTime.UtcNow - epoch).TotalSeconds).ToString()&#xD;&#xA;Dim nonce As String = Guid.NewGuid().ToString(&quot;N&quot;)&#xD;&#xA;&#xD;&#xA;Dim enc As System.Func(Of String, String) =&#xD;&#xA;    Function(v As String)&#xD;&#xA;        Dim s = System.Uri.EscapeDataString(If(v, String.Empty))&#xD;&#xA;        s = s.Replace(&quot;!&quot;, &quot;%21&quot;).Replace(&quot;*&quot;, &quot;%2A&quot;).Replace(&quot;'&quot;, &quot;%27&quot;).Replace(&quot;(&quot;, &quot;%28&quot;).Replace(&quot;)&quot;, &quot;%29&quot;)&#xD;&#xA;        Return s&#xD;&#xA;    End Function&#xD;&#xA;&#xD;&#xA;Dim p = New System.Collections.Generic.SortedDictionary(Of String, String)()&#xD;&#xA;p(&quot;oauth_consumer_key&quot;) = inConsumerKey&#xD;&#xA;p(&quot;oauth_nonce&quot;) = nonce&#xD;&#xA;p(&quot;oauth_signature_method&quot;) = &quot;HMAC-SHA256&quot;&#xD;&#xA;p(&quot;oauth_timestamp&quot;) = ts&#xD;&#xA;p(&quot;oauth_token&quot;) = inToken&#xD;&#xA;p(&quot;oauth_version&quot;) = &quot;1.0&quot;&#xD;&#xA;&#xD;&#xA;Dim sb As New System.Text.StringBuilder()&#xD;&#xA;For Each kvp In p&#xD;&#xA;    If sb.Length &gt; 0 Then sb.Append(&quot;&amp;&quot;)&#xD;&#xA;    sb.Append(enc(kvp.Key)).Append(&quot;=&quot;).Append(enc(kvp.Value))&#xD;&#xA;Next&#xD;&#xA;Dim paramString As String = sb.ToString()&#xD;&#xA;&#xD;&#xA;Dim baseString As String = inMethod &amp; &quot;&amp;&quot; &amp; enc(inUrl) &amp; &quot;&amp;&quot; &amp; enc(paramString)&#xD;&#xA;Dim signingKey As String = enc(inConsumerSecret) &amp; &quot;&amp;&quot; &amp; enc(inTokenSecret)&#xD;&#xA;&#xD;&#xA;Dim hmac = New System.Security.Cryptography.HMACSHA256(System.Text.Encoding.UTF8.GetBytes(signingKey))&#xD;&#xA;Dim signature As String = Convert.ToBase64String(hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(baseString)))&#xD;&#xA;&#xD;&#xA;Dim ah As New System.Text.StringBuilder(&quot;OAuth &quot;)&#xD;&#xA;ah.Append(&quot;realm=&quot;&quot;&quot;).Append(inRealm).Append(&quot;&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_consumer_key=&quot;&quot;&quot;).Append(inConsumerKey).Append(&quot;&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_token=&quot;&quot;&quot;).Append(inToken).Append(&quot;&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_signature_method=&quot;&quot;HMAC-SHA256&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_timestamp=&quot;&quot;&quot;).Append(ts).Append(&quot;&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_nonce=&quot;&quot;&quot;).Append(nonce).Append(&quot;&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_version=&quot;&quot;1.0&quot;&quot;,&quot;)&#xD;&#xA;ah.Append(&quot;oauth_signature=&quot;&quot;&quot;).Append(enc(signature)).Append(&quot;&quot;&quot;&quot;)&#xD;&#xA;&#xD;&#xA;outAuthHeader = ah.ToString()&#xD;&#xA;" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="416,197" sap2010:WorkflowViewState.IdRef="InvokeCode_17">
+                                      <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Genera Authorization para NetSuite (OAuth 1.0a + HMAC-SHA256)&#xA;&#xA;inConsumerKey = inConsumerKey.Trim()&#xA;inConsumerSecret = inConsumerSecret.Trim()&#xA;inToken = inToken.Trim()&#xA;inTokenSecret = inTokenSecret.Trim()&#xA;inRealm = inRealm.Trim()&#xA;inUrl = inUrl.Trim()&#xA;inMethod = inMethod.Trim().ToUpperInvariant()&#xA;&#xA;Dim epoch As New DateTime(1970,1,1,0,0,0, DateTimeKind.Utc)&#xA;Dim ts As String = CLng((DateTime.UtcNow - epoch).TotalSeconds).ToString()&#xA;Dim nonce As String = Guid.NewGuid().ToString(&quot;N&quot;)&#xA;&#xA;Dim enc As System.Func(Of String, String) =&#xA;    Function(v As String)&#xA;        Dim s = System.Uri.EscapeDataString(If(v, String.Empty))&#xA;        s = s.Replace(&quot;!&quot;, &quot;%21&quot;).Replace(&quot;*&quot;, &quot;%2A&quot;).Replace(&quot;'&quot;, &quot;%27&quot;).Replace(&quot;(&quot;, &quot;%28&quot;).Replace(&quot;)&quot;, &quot;%29&quot;)&#xA;        Return s&#xA;    End Function&#xA;&#xA;Dim p = New System.Collections.Generic.SortedDictionary(Of String, String)()&#xA;p(&quot;oauth_consumer_key&quot;) = inConsumerKey&#xA;p(&quot;oauth_nonce&quot;) = nonce&#xA;p(&quot;oauth_signature_method&quot;) = &quot;HMAC-SHA256&quot;&#xA;p(&quot;oauth_timestamp&quot;) = ts&#xA;p(&quot;oauth_token&quot;) = inToken&#xA;p(&quot;oauth_version&quot;) = &quot;1.0&quot;&#xA;&#xA;Dim sb As New System.Text.StringBuilder()&#xA;For Each kvp In p&#xA;    If sb.Length &gt; 0 Then sb.Append(&quot;&amp;&quot;)&#xA;    sb.Append(enc(kvp.Key)).Append(&quot;=&quot;).Append(enc(kvp.Value))&#xA;Next&#xA;Dim paramString As String = sb.ToString()&#xA;&#xA;Dim baseString As String = inMethod &amp; &quot;&amp;&quot; &amp; enc(inUrl) &amp; &quot;&amp;&quot; &amp; enc(paramString)&#xA;Dim signingKey As String = enc(inConsumerSecret) &amp; &quot;&amp;&quot; &amp; enc(inTokenSecret)&#xA;&#xA;Dim hmac = New System.Security.Cryptography.HMACSHA256(System.Text.Encoding.UTF8.GetBytes(signingKey))&#xA;Dim signature As String = Convert.ToBase64String(hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(baseString)))&#xA;&#xA;Dim ah As New System.Text.StringBuilder(&quot;OAuth &quot;)&#xA;ah.Append(&quot;realm=&quot;&quot;&quot;).Append(inRealm).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_consumer_key=&quot;&quot;&quot;).Append(inConsumerKey).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_token=&quot;&quot;&quot;).Append(inToken).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_signature_method=&quot;&quot;HMAC-SHA256&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_timestamp=&quot;&quot;&quot;).Append(ts).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_nonce=&quot;&quot;&quot;).Append(nonce).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_version=&quot;&quot;1.0&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_signature=&quot;&quot;&quot;).Append(enc(signature)).Append(&quot;&quot;&quot;&quot;)&#xA;&#xA;outAuthHeader = ah.ToString()&#xA;" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="518,197" sap2010:WorkflowViewState.IdRef="InvokeCode_17">
                                         <ui:InvokeCode.Arguments>
                                           <InArgument x:TypeArguments="x:String" x:Key="inConsumerKey">
                                             <Literal x:TypeArguments="x:String">4ec445f6e0533bd1b8d68230ff69a888187a54505a55d8e76de1b225e9f088a1</Literal>
@@ -917,45 +929,45 @@
                                           </InOutArgument>
                                         </ui:InvokeCode.Arguments>
                                       </ui:InvokeCode>
-                                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="416,122" sap2010:WorkflowViewState.IdRef="WriteLine_58" Text="[NEW_QUERY_API]" />
-                                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="416,122" sap2010:WorkflowViewState.IdRef="WriteLine_60" Text="[outAuthHeader]" />
-                                      <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/xml" DisplayName="HTTP Request" EnableSSLVerification="True" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="416,102" sap2010:WorkflowViewState.IdRef="HttpClient_29" Method="POST" Result="[responseAPI_Token]" StatusCode="[statusResponseAPI]" TimeoutMS="6000">
-                                        <ui:HttpClient.Attachments>
-                                          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                        </ui:HttpClient.Attachments>
-                                        <ui:HttpClient.Cookies>
-                                          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                        </ui:HttpClient.Cookies>
-                                        <ui:HttpClient.Headers>
-                                          <InArgument x:TypeArguments="x:String" x:Key="Authorization">[outAuthHeader]</InArgument>
-                                          <InArgument x:TypeArguments="x:String" x:Key="Type">application/json</InArgument>
-                                          <InArgument x:TypeArguments="x:String" x:Key="Prefer">transient</InArgument>
-                                        </ui:HttpClient.Headers>
-                                        <ui:HttpClient.Parameters>
-                                          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                        </ui:HttpClient.Parameters>
-                                        <ui:HttpClient.UrlSegments>
-                                          <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                        </ui:HttpClient.UrlSegments>
-                                      </ui:HttpClient>
-                                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="416,122" sap2010:WorkflowViewState.IdRef="WriteLine_59" Text="[&quot;✅ Status:  &quot; + statusResponseAPI.ToString() + &quot; (&quot; + responseAPI_Token + &quot;)&quot;]" />
-                                      <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="416,75" sap2010:WorkflowViewState.IdRef="CommentOut_16">
-                                        <ui:CommentOut.Body>
-                                          <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="638,1081" sap2010:WorkflowViewState.IdRef="Sequence_453">
+                                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="WriteLine_60" Text="[outAuthHeader]" />
+                                      <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="WriteLine_58" Text="[NEW_QUERY_API]" />
+                                      <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[statusResponseAPI =  401]" DisplayName="Do While" sap:VirtualizedContainerService.HintSize="518,836" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_8" MaxIterations="3">
+                                        <ui:InterruptibleDoWhile.Body>
+                                          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,699" sap2010:WorkflowViewState.IdRef="Sequence_297">
                                             <sap:WorkflowViewStateService.ViewState>
                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                               </scg:Dictionary>
                                             </sap:WorkflowViewStateService.ViewState>
-                                            <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[statusResponseAPI =  401]" DisplayName="Do While" sap:VirtualizedContainerService.HintSize="604,1021" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_4" MaxIterations="3">
-                                              <ui:InterruptibleDoWhile.Body>
-                                                <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="570,884" sap2010:WorkflowViewState.IdRef="Sequence_297">
+                                            <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/xml" DisplayName="HTTP Request" EnableSSLVerification="True" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="450,102" sap2010:WorkflowViewState.IdRef="HttpClient_29" Method="POST" Result="[responseAPI]" StatusCode="[statusResponseAPI]" TimeoutMS="600000">
+                                              <ui:HttpClient.Attachments>
+                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                              </ui:HttpClient.Attachments>
+                                              <ui:HttpClient.Cookies>
+                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                              </ui:HttpClient.Cookies>
+                                              <ui:HttpClient.Headers>
+                                                <InArgument x:TypeArguments="x:String" x:Key="Authorization">[outAuthHeader]</InArgument>
+                                                <InArgument x:TypeArguments="x:String" x:Key="Type">application/json</InArgument>
+                                                <InArgument x:TypeArguments="x:String" x:Key="Prefer">transient</InArgument>
+                                              </ui:HttpClient.Headers>
+                                              <ui:HttpClient.Parameters>
+                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                              </ui:HttpClient.Parameters>
+                                              <ui:HttpClient.UrlSegments>
+                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                              </ui:HttpClient.UrlSegments>
+                                            </ui:HttpClient>
+                                            <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="450,122" sap2010:WorkflowViewState.IdRef="WriteLine_59" Text="[&quot;✅ Status:  &quot; + statusResponseAPI.ToString() + &quot; (&quot; + responseAPI + &quot;)&quot;]" />
+                                            <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="CommentOut_26">
+                                              <ui:CommentOut.Body>
+                                                <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="416,153" sap2010:WorkflowViewState.IdRef="Sequence_464">
                                                   <sap:WorkflowViewStateService.ViewState>
                                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                     </scg:Dictionary>
                                                   </sap:WorkflowViewStateService.ViewState>
-                                                  <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/JSON" DisplayName="HTTP Request" EnableSSLVerification="False" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="536,102" sap2010:WorkflowViewState.IdRef="HttpClient_19" Method="POST" Result="[responseAPI]" StatusCode="[statusResponseAPI]" TimeoutMS="20000">
+                                                  <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/JSON" DisplayName="HTTP Request" EnableSSLVerification="False" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="382,93" sap2010:WorkflowViewState.IdRef="HttpClient_33" Method="POST" Result="[responseAPI]" StatusCode="[statusResponseAPI]" TimeoutMS="20000">
                                                     <ui:HttpClient.Attachments>
                                                       <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
                                                     </ui:HttpClient.Attachments>
@@ -973,15 +985,32 @@
                                                       <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
                                                     </ui:HttpClient.UrlSegments>
                                                   </ui:HttpClient>
-                                                  <If Condition="[statusResponseAPI = 401]" sap:VirtualizedContainerService.HintSize="536,722" sap2010:WorkflowViewState.IdRef="If_59">
-                                                    <sap:WorkflowViewStateService.ViewState>
-                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                                      </scg:Dictionary>
-                                                    </sap:WorkflowViewStateService.ViewState>
-                                                    <If.Then>
-                                                      <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="502,472" sap2010:WorkflowViewState.IdRef="Sequence_295">
+                                                </Sequence>
+                                              </ui:CommentOut.Body>
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                            </ui:CommentOut>
+                                            <If Condition="[statusResponseAPI = 401]" sap:VirtualizedContainerService.HintSize="450,358" sap2010:WorkflowViewState.IdRef="If_59">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <If.Then>
+                                                <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,108" sap2010:WorkflowViewState.IdRef="Sequence_295">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="382,48" sap2010:WorkflowViewState.IdRef="CommentOut_22">
+                                                    <ui:CommentOut.Body>
+                                                      <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="502,472" sap2010:WorkflowViewState.IdRef="Sequence_460">
                                                         <sap:WorkflowViewStateService.ViewState>
                                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1024,35 +1053,35 @@
                                                           </Assign>
                                                         </Sequence>
                                                       </Sequence>
-                                                    </If.Then>
-                                                    <If.Else>
-                                                      <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_296">
-                                                        <sap:WorkflowViewStateService.ViewState>
-                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                                          </scg:Dictionary>
-                                                        </sap:WorkflowViewStateService.ViewState>
-                                                      </Sequence>
-                                                    </If.Else>
-                                                  </If>
+                                                    </ui:CommentOut.Body>
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                  </ui:CommentOut>
                                                 </Sequence>
-                                              </ui:InterruptibleDoWhile.Body>
-                                              <sap:WorkflowViewStateService.ViewState>
-                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
-                                                </scg:Dictionary>
-                                              </sap:WorkflowViewStateService.ViewState>
-                                            </ui:InterruptibleDoWhile>
+                                              </If.Then>
+                                              <If.Else>
+                                                <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="416,89" sap2010:WorkflowViewState.IdRef="Sequence_296">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                </Sequence>
+                                              </If.Else>
+                                            </If>
                                           </Sequence>
-                                        </ui:CommentOut.Body>
+                                        </ui:InterruptibleDoWhile.Body>
                                         <sap:WorkflowViewStateService.ViewState>
                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                             <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                           </scg:Dictionary>
                                         </sap:WorkflowViewStateService.ViewState>
-                                      </ui:CommentOut>
+                                      </ui:InterruptibleDoWhile>
                                     </Sequence>
                                     <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="1074,122" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_31" JsonObject="[data_factura_json]" JsonString="[responseAPI]">
                                       <sap:WorkflowViewStateService.ViewState>
@@ -1063,14 +1092,14 @@
                                       </sap:WorkflowViewStateService.ViewState>
                                     </ui:DeserializeJson>
                                     <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="1074,122" sap2010:WorkflowViewState.IdRef="WriteLine_52" Text="[&quot;Total resultados factura: &quot; + data_factura_json(&quot;totalResults&quot;).ToString]" />
-                                    <Sequence DisplayName="Tiene Resultados Facturas" sap:VirtualizedContainerService.HintSize="1074,7983" sap2010:WorkflowViewState.IdRef="Sequence_408">
+                                    <Sequence DisplayName="Tiene Resultados Facturas" sap:VirtualizedContainerService.HintSize="1074,8729" sap2010:WorkflowViewState.IdRef="Sequence_408">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                           <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                         </scg:Dictionary>
                                       </sap:WorkflowViewStateService.ViewState>
-                                      <If Condition="[data_factura_json(&quot;totalResults&quot;).ToString.Equals(&quot;0&quot;)]" sap:VirtualizedContainerService.HintSize="1040,7891" sap2010:WorkflowViewState.IdRef="If_92">
+                                      <If Condition="[data_factura_json(&quot;totalResults&quot;).ToString.Equals(&quot;0&quot;)]" sap:VirtualizedContainerService.HintSize="1040,8637" sap2010:WorkflowViewState.IdRef="If_92">
                                         <sap:WorkflowViewStateService.ViewState>
                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1078,37 +1107,61 @@
                                           </scg:Dictionary>
                                         </sap:WorkflowViewStateService.ViewState>
                                         <If.Then>
-                                          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="1006,6569" sap2010:WorkflowViewState.IdRef="Sequence_344">
+                                          <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="1006,7357" sap2010:WorkflowViewState.IdRef="Sequence_344">
                                             <sap:WorkflowViewStateService.ViewState>
                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                               </scg:Dictionary>
                                             </sap:WorkflowViewStateService.ViewState>
-                                            <Sequence DisplayName="Llamada API Proformas" sap:VirtualizedContainerService.HintSize="972,1190" sap2010:WorkflowViewState.IdRef="Sequence_303">
+                                            <Sequence DisplayName="Llamada API Proformas" sap:VirtualizedContainerService.HintSize="972,1978" sap2010:WorkflowViewState.IdRef="Sequence_303">
                                               <sap:WorkflowViewStateService.ViewState>
                                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                   <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                                 </scg:Dictionary>
                                               </sap:WorkflowViewStateService.ViewState>
-                                              <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="586,122" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_32" JsonObject="[JSON_POST]" JsonString="[QUERY_API_PROFORMAS]" />
-                                              <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim queryStr As String = jsonObject(&quot;q&quot;).ToString&#xA;Dim valores() As String = {&quot;YYYYY&quot;, &quot;XXXXX&quot;, &quot;%&quot;, &quot;RETIE&quot;, &quot;RETILAP&quot;}&#xA;For Each value As String In valores&#xA;&#x9;queryStr = queryStr.Replace(value, &quot;'&quot; + value + &quot;'&quot;)&#xA;Next&#xA;queryStr = queryStr.Replace(&quot;XXXXX&quot;, lote)&#xA;queryStr = queryStr.Replace(&quot;YYYYY&quot;,  &quot;T&quot;)&#xA;jsonObject(&quot;q&quot;) = queryStr&#xA;Dim modifiedJson As String = jsonObject.ToString&#xA;query = modifiedJson" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="586,197" sap2010:WorkflowViewState.IdRef="InvokeCode_13">
+                                              <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_32" JsonObject="[JSON_POST]" JsonString="[QUERY_API_PROFORMAS]" />
+                                              <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim queryStr As String = jsonObject(&quot;q&quot;).ToString&#xA;Dim valores() As String = {&quot;YYYYY&quot;, &quot;XXXXX&quot;, &quot;%&quot;, &quot;RETIE&quot;, &quot;RETILAP&quot;}&#xA;For Each value As String In valores&#xA;&#x9;queryStr = queryStr.Replace(value, &quot;'&quot; + value + &quot;'&quot;)&#xA;Next&#xA;queryStr = queryStr.Replace(&quot;XXXXX&quot;, lote)&#xA;queryStr = queryStr.Replace(&quot;YYYYY&quot;,  &quot;T&quot;)&#xA;jsonObject(&quot;q&quot;) = queryStr&#xA;Dim modifiedJson As String = jsonObject.ToString&#xA;query = modifiedJson" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="518,197" sap2010:WorkflowViewState.IdRef="InvokeCode_13">
                                                 <ui:InvokeCode.Arguments>
                                                   <InArgument x:TypeArguments="njl:JObject" x:Key="jsonObject">[JSON_POST]</InArgument>
                                                   <InArgument x:TypeArguments="x:String" x:Key="lote">[currentItem]</InArgument>
                                                   <OutArgument x:TypeArguments="x:String" x:Key="query">[NEW_QUERY_API]</OutArgument>
                                                 </ui:InvokeCode.Arguments>
                                               </ui:InvokeCode>
-                                              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="586,122" sap2010:WorkflowViewState.IdRef="WriteLine_53" Text="[NEW_QUERY_API]" />
-                                              <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[statusResponseAPI =  401]" DisplayName="Do While" sap:VirtualizedContainerService.HintSize="586,657" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_5" MaxIterations="3">
+                                              <Assign sap:VirtualizedContainerService.HintSize="518,114" sap2010:WorkflowViewState.IdRef="Assign_312">
+                                                <Assign.To>
+                                                  <OutArgument x:TypeArguments="x:String">[outAuthHeader]</OutArgument>
+                                                </Assign.To>
+                                                <Assign.Value>
+                                                  <InArgument x:TypeArguments="x:String">
+                                                    <Literal x:TypeArguments="x:String" Value="" />
+                                                  </InArgument>
+                                                </Assign.Value>
+                                              </Assign>
+                                              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="WriteLine_63" Text="[outAuthHeader]" />
+                                              <ui:InvokeCode ContinueOnError="{x:Null}" Code="' Genera Authorization para NetSuite (OAuth 1.0a + HMAC-SHA256)&#xA;&#xA;inConsumerKey = inConsumerKey.Trim()&#xA;inConsumerSecret = inConsumerSecret.Trim()&#xA;inToken = inToken.Trim()&#xA;inTokenSecret = inTokenSecret.Trim()&#xA;inRealm = inRealm.Trim()&#xA;inUrl = inUrl.Trim()&#xA;inMethod = inMethod.Trim().ToUpperInvariant()&#xA;&#xA;Dim epoch As New DateTime(1970,1,1,0,0,0, DateTimeKind.Utc)&#xA;Dim ts As String = CLng((DateTime.UtcNow - epoch).TotalSeconds).ToString()&#xA;Dim nonce As String = Guid.NewGuid().ToString(&quot;N&quot;)&#xA;&#xA;Dim enc As System.Func(Of String, String) =&#xA;    Function(v As String)&#xA;        Dim s = System.Uri.EscapeDataString(If(v, String.Empty))&#xA;        s = s.Replace(&quot;!&quot;, &quot;%21&quot;).Replace(&quot;*&quot;, &quot;%2A&quot;).Replace(&quot;'&quot;, &quot;%27&quot;).Replace(&quot;(&quot;, &quot;%28&quot;).Replace(&quot;)&quot;, &quot;%29&quot;)&#xA;        Return s&#xA;    End Function&#xA;&#xA;Dim p = New System.Collections.Generic.SortedDictionary(Of String, String)()&#xA;p(&quot;oauth_consumer_key&quot;) = inConsumerKey&#xA;p(&quot;oauth_nonce&quot;) = nonce&#xA;p(&quot;oauth_signature_method&quot;) = &quot;HMAC-SHA256&quot;&#xA;p(&quot;oauth_timestamp&quot;) = ts&#xA;p(&quot;oauth_token&quot;) = inToken&#xA;p(&quot;oauth_version&quot;) = &quot;1.0&quot;&#xA;&#xA;Dim sb As New System.Text.StringBuilder()&#xA;For Each kvp In p&#xA;    If sb.Length &gt; 0 Then sb.Append(&quot;&amp;&quot;)&#xA;    sb.Append(enc(kvp.Key)).Append(&quot;=&quot;).Append(enc(kvp.Value))&#xA;Next&#xA;Dim paramString As String = sb.ToString()&#xA;&#xA;Dim baseString As String = inMethod &amp; &quot;&amp;&quot; &amp; enc(inUrl) &amp; &quot;&amp;&quot; &amp; enc(paramString)&#xA;Dim signingKey As String = enc(inConsumerSecret) &amp; &quot;&amp;&quot; &amp; enc(inTokenSecret)&#xA;&#xA;Dim hmac = New System.Security.Cryptography.HMACSHA256(System.Text.Encoding.UTF8.GetBytes(signingKey))&#xA;Dim signature As String = Convert.ToBase64String(hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(baseString)))&#xA;&#xA;Dim ah As New System.Text.StringBuilder(&quot;OAuth &quot;)&#xA;ah.Append(&quot;realm=&quot;&quot;&quot;).Append(inRealm).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_consumer_key=&quot;&quot;&quot;).Append(inConsumerKey).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_token=&quot;&quot;&quot;).Append(inToken).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_signature_method=&quot;&quot;HMAC-SHA256&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_timestamp=&quot;&quot;&quot;).Append(ts).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_nonce=&quot;&quot;&quot;).Append(nonce).Append(&quot;&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_version=&quot;&quot;1.0&quot;&quot;,&quot;)&#xA;ah.Append(&quot;oauth_signature=&quot;&quot;&quot;).Append(enc(signature)).Append(&quot;&quot;&quot;&quot;)&#xA;&#xA;outAuthHeader = ah.ToString()&#xA;" DisplayName="Invoke Code" sap:VirtualizedContainerService.HintSize="518,197" sap2010:WorkflowViewState.IdRef="InvokeCode_18">
+                                                <ui:InvokeCode.Arguments>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inConsumerKey">4ec445f6e0533bd1b8d68230ff69a888187a54505a55d8e76de1b225e9f088a1</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inConsumerSecret">2ee35b4363985e15811736f94d844081a78278fd4f405811cd3e26429a2ee532</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inToken">8ebeee71b1634a981cf7a384e7b075249cc4a19af4b9f1e23647bdefbe1617e3</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inTokenSecret">f55d2073ea349cbc68f186d13ac01b496f94f7e5cd0cde56138b6716e57fbced</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inRealm">5845631</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inUrl" xml:space="preserve"> https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql</InArgument>
+                                                  <InArgument x:TypeArguments="x:String" x:Key="inMethod">POST</InArgument>
+                                                  <InOutArgument x:TypeArguments="x:String" x:Key="outAuthHeader">[outAuthHeader]</InOutArgument>
+                                                </ui:InvokeCode.Arguments>
+                                              </ui:InvokeCode>
+                                              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="WriteLine_62" Text="[outAuthHeader]" />
+                                              <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="518,122" sap2010:WorkflowViewState.IdRef="WriteLine_53" Text="[NEW_QUERY_API]" />
+                                              <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[statusResponseAPI =  401]" DisplayName="Do While" sap:VirtualizedContainerService.HintSize="518,890" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_5" MaxIterations="3">
                                                 <ui:InterruptibleDoWhile.Body>
-                                                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="552,520" sap2010:WorkflowViewState.IdRef="Sequence_302">
+                                                  <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,753" sap2010:WorkflowViewState.IdRef="Sequence_302">
                                                     <sap:WorkflowViewStateService.ViewState>
                                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                                       </scg:Dictionary>
                                                     </sap:WorkflowViewStateService.ViewState>
-                                                    <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/JSON" DisplayName="HTTP Request" EnableSSLVerification="False" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="518,102" sap2010:WorkflowViewState.IdRef="HttpClient_21" Method="POST" Result="[responseAPI]" StatusCode="[statusResponseAPI]" TimeoutMS="20000">
+                                                    <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/JSON" DisplayName="HTTP Request" EnableSSLVerification="False" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="450,102" sap2010:WorkflowViewState.IdRef="HttpClient_30" Method="POST" Result="[responseAPI]" StatusCode="[statusResponseAPI]" TimeoutMS="600000">
                                                       <ui:HttpClient.Attachments>
                                                         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
                                                       </ui:HttpClient.Attachments>
@@ -1116,7 +1169,8 @@
                                                         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
                                                       </ui:HttpClient.Cookies>
                                                       <ui:HttpClient.Headers>
-                                                        <InArgument x:TypeArguments="x:String" x:Key="Authorization">["Bearer " + TOKEN_API_NS]</InArgument>
+                                                        <InArgument x:TypeArguments="x:String" x:Key="Authorization">[outAuthHeader]</InArgument>
+                                                        <InArgument x:TypeArguments="x:String" x:Key="Type">application/json</InArgument>
                                                         <InArgument x:TypeArguments="x:String" x:Key="Prefer">transient</InArgument>
                                                       </ui:HttpClient.Headers>
                                                       <ui:HttpClient.Parameters>
@@ -1126,7 +1180,43 @@
                                                         <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
                                                       </ui:HttpClient.UrlSegments>
                                                     </ui:HttpClient>
-                                                    <If Condition="[statusResponseAPI = 401]" sap:VirtualizedContainerService.HintSize="518,358" sap2010:WorkflowViewState.IdRef="If_60">
+                                                    <WriteLine DisplayName="Write Line" sap:VirtualizedContainerService.HintSize="450,122" sap2010:WorkflowViewState.IdRef="WriteLine_61" Text="[&quot;✅ Status:  &quot; + statusResponseAPI.ToString() + &quot; (&quot; + responseAPI + &quot;)&quot;]" />
+                                                    <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="450,84" sap2010:WorkflowViewState.IdRef="CommentOut_27">
+                                                      <ui:CommentOut.Body>
+                                                        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="416,153" sap2010:WorkflowViewState.IdRef="Sequence_465">
+                                                          <sap:WorkflowViewStateService.ViewState>
+                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                            </scg:Dictionary>
+                                                          </sap:WorkflowViewStateService.ViewState>
+                                                          <ui:HttpClient ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" Password="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" Username="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" Body="[NEW_QUERY_API]" BodyFormat="application/JSON" DisplayName="HTTP Request" EnableSSLVerification="False" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/query/v1/suiteql" sap:VirtualizedContainerService.HintSize="382,93" sap2010:WorkflowViewState.IdRef="HttpClient_34" Method="POST" Result="[responseAPI]" StatusCode="[statusResponseAPI]" TimeoutMS="20000">
+                                                            <ui:HttpClient.Attachments>
+                                                              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                            </ui:HttpClient.Attachments>
+                                                            <ui:HttpClient.Cookies>
+                                                              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                            </ui:HttpClient.Cookies>
+                                                            <ui:HttpClient.Headers>
+                                                              <InArgument x:TypeArguments="x:String" x:Key="Authorization">["Bearer " + TOKEN_API_NS]</InArgument>
+                                                              <InArgument x:TypeArguments="x:String" x:Key="Prefer">transient</InArgument>
+                                                            </ui:HttpClient.Headers>
+                                                            <ui:HttpClient.Parameters>
+                                                              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                            </ui:HttpClient.Parameters>
+                                                            <ui:HttpClient.UrlSegments>
+                                                              <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                            </ui:HttpClient.UrlSegments>
+                                                          </ui:HttpClient>
+                                                        </Sequence>
+                                                      </ui:CommentOut.Body>
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                    </ui:CommentOut>
+                                                    <If Condition="[statusResponseAPI = 401]" sap:VirtualizedContainerService.HintSize="450,385" sap2010:WorkflowViewState.IdRef="If_60">
                                                       <sap:WorkflowViewStateService.ViewState>
                                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1134,48 +1224,66 @@
                                                         </scg:Dictionary>
                                                       </sap:WorkflowViewStateService.ViewState>
                                                       <If.Then>
-                                                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="484,108" sap2010:WorkflowViewState.IdRef="Sequence_300">
+                                                        <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="416,135" sap2010:WorkflowViewState.IdRef="Sequence_300">
                                                           <sap:WorkflowViewStateService.ViewState>
                                                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                                             </scg:Dictionary>
                                                           </sap:WorkflowViewStateService.ViewState>
-                                                          <Sequence DisplayName="Refresh Token" sap:VirtualizedContainerService.HintSize="450,48" sap2010:WorkflowViewState.IdRef="Sequence_299">
+                                                          <ui:CommentOut DisplayName="Comment Out" sap:VirtualizedContainerService.HintSize="382,75" sap2010:WorkflowViewState.IdRef="CommentOut_20">
+                                                            <ui:CommentOut.Body>
+                                                              <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="502,472" sap2010:WorkflowViewState.IdRef="Sequence_458">
+                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                  </scg:Dictionary>
+                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                <Sequence DisplayName="Refresh Token" sap:VirtualizedContainerService.HintSize="468,412" sap2010:WorkflowViewState.IdRef="Sequence_299">
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                  <ui:HttpClient Body="{x:Null}" ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" BodyFormat="application/x-www-form-urlencoded" DisplayName="HTTP Request" EnableSSLVerification="True" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/auth/oauth2/v1/token" sap:VirtualizedContainerService.HintSize="434,102" sap2010:WorkflowViewState.IdRef="HttpClient_22" Method="POST" Password="ae90eb5411550e828676a0539c5dcea804a4e4a150f605988519659cb946ad4b" Result="[responseAPI_Token]" StatusCode="[statusResponseAPI]" TimeoutMS="6000" Username="63beb1c66b3db57f33321046fde3785c7cb8ef5e3d7104535b51ec5dba8830bc">
+                                                                    <ui:HttpClient.Attachments>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                                    </ui:HttpClient.Attachments>
+                                                                    <ui:HttpClient.Cookies>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                                    </ui:HttpClient.Cookies>
+                                                                    <ui:HttpClient.Headers>
+                                                                      <InArgument x:TypeArguments="x:String" x:Key="Content-Type">application/x-www-form-urlencoded</InArgument>
+                                                                    </ui:HttpClient.Headers>
+                                                                    <ui:HttpClient.Parameters>
+                                                                      <InArgument x:TypeArguments="x:String" x:Key="refresh_token">[TOKEN_REFRESH_API_NS]</InArgument>
+                                                                      <InArgument x:TypeArguments="x:String" x:Key="redirect_uri">https://cloud.uipath.com/provisioning_/callback</InArgument>
+                                                                      <InArgument x:TypeArguments="x:String" x:Key="grant_type">refresh_token</InArgument>
+                                                                    </ui:HttpClient.Parameters>
+                                                                    <ui:HttpClient.UrlSegments>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
+                                                                    </ui:HttpClient.UrlSegments>
+                                                                  </ui:HttpClient>
+                                                                  <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="434,122" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_33" JsonObject="[data_auth]" JsonString="[responseAPI_Token]" />
+                                                                  <Assign sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Assign_235">
+                                                                    <Assign.To>
+                                                                      <OutArgument x:TypeArguments="x:String">[TOKEN_API_NS]</OutArgument>
+                                                                    </Assign.To>
+                                                                    <Assign.Value>
+                                                                      <InArgument x:TypeArguments="x:String">[data_auth("access_token").ToString]</InArgument>
+                                                                    </Assign.Value>
+                                                                  </Assign>
+                                                                </Sequence>
+                                                              </Sequence>
+                                                            </ui:CommentOut.Body>
                                                             <sap:WorkflowViewStateService.ViewState>
                                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                                 <x:Boolean x:Key="IsExpanded">False</x:Boolean>
                                                                 <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                                               </scg:Dictionary>
                                                             </sap:WorkflowViewStateService.ViewState>
-                                                            <ui:HttpClient Body="{x:Null}" ClientCertificate="{x:Null}" ClientCertificatePassword="{x:Null}" ConsumerKey="{x:Null}" ConsumerSecret="{x:Null}" ContinueOnError="{x:Null}" FileAttachments="{x:Null}" OAuth1Token="{x:Null}" OAuth1TokenSecret="{x:Null}" OAuth2Token="{x:Null}" ResourcePath="{x:Null}" ResponseAttachment="{x:Null}" ResponseHeaders="{x:Null}" SecureClientCertificatePassword="{x:Null}" SecurePassword="{x:Null}" AcceptFormat="JSON" AuthenticationType="None" BodyFormat="application/x-www-form-urlencoded" DisplayName="HTTP Request" EnableSSLVerification="True" EndPoint="https://5845631.suitetalk.api.netsuite.com/services/rest/auth/oauth2/v1/token" sap:VirtualizedContainerService.HintSize="434,70" sap2010:WorkflowViewState.IdRef="HttpClient_22" Method="POST" Password="ae90eb5411550e828676a0539c5dcea804a4e4a150f605988519659cb946ad4b" Result="[responseAPI_Token]" StatusCode="[statusResponseAPI]" TimeoutMS="6000" Username="63beb1c66b3db57f33321046fde3785c7cb8ef5e3d7104535b51ec5dba8830bc">
-                                                              <ui:HttpClient.Attachments>
-                                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                                              </ui:HttpClient.Attachments>
-                                                              <ui:HttpClient.Cookies>
-                                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                                              </ui:HttpClient.Cookies>
-                                                              <ui:HttpClient.Headers>
-                                                                <InArgument x:TypeArguments="x:String" x:Key="Content-Type">application/x-www-form-urlencoded</InArgument>
-                                                              </ui:HttpClient.Headers>
-                                                              <ui:HttpClient.Parameters>
-                                                                <InArgument x:TypeArguments="x:String" x:Key="refresh_token">[TOKEN_REFRESH_API_NS]</InArgument>
-                                                                <InArgument x:TypeArguments="x:String" x:Key="redirect_uri">https://cloud.uipath.com/provisioning_/callback</InArgument>
-                                                                <InArgument x:TypeArguments="x:String" x:Key="grant_type">refresh_token</InArgument>
-                                                              </ui:HttpClient.Parameters>
-                                                              <ui:HttpClient.UrlSegments>
-                                                                <scg:Dictionary x:TypeArguments="x:String, InArgument(x:String)" />
-                                                              </ui:HttpClient.UrlSegments>
-                                                            </ui:HttpClient>
-                                                            <ui:DeserializeJson x:TypeArguments="njl:JObject" JsonSample="{x:Null}" DisplayName="Deserialize JSON" sap:VirtualizedContainerService.HintSize="434,60" sap2010:WorkflowViewState.IdRef="DeserializeJson`1_33" JsonObject="[data_auth]" JsonString="[responseAPI_Token]" />
-                                                            <Assign sap:VirtualizedContainerService.HintSize="434,82" sap2010:WorkflowViewState.IdRef="Assign_235">
-                                                              <Assign.To>
-                                                                <OutArgument x:TypeArguments="x:String">[TOKEN_API_NS]</OutArgument>
-                                                              </Assign.To>
-                                                              <Assign.Value>
-                                                                <InArgument x:TypeArguments="x:String">[data_auth("access_token").ToString]</InArgument>
-                                                              </Assign.Value>
-                                                            </Assign>
-                                                          </Sequence>
+                                                          </ui:CommentOut>
                                                         </Sequence>
                                                       </If.Then>
                                                       <If.Else>
@@ -1845,13 +1953,13 @@
                                           </Sequence>
                                         </If.Then>
                                         <If.Else>
-                                          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="586,1161" sap2010:WorkflowViewState.IdRef="Sequence_407">
+                                          <Sequence DisplayName="Else" sap:VirtualizedContainerService.HintSize="586,1119" sap2010:WorkflowViewState.IdRef="Sequence_407">
                                             <sap:WorkflowViewStateService.ViewState>
                                               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                               </scg:Dictionary>
                                             </sap:WorkflowViewStateService.ViewState>
-                                            <Sequence DisplayName="Validar Data Facturas" sap:VirtualizedContainerService.HintSize="552,1101" sap2010:WorkflowViewState.IdRef="Sequence_406">
+                                            <Sequence DisplayName="Validar Data Facturas" sap:VirtualizedContainerService.HintSize="552,1059" sap2010:WorkflowViewState.IdRef="Sequence_406">
                                               <sap:WorkflowViewStateService.ViewState>
                                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -1866,13 +1974,13 @@
                                                   <InArgument x:TypeArguments="njl:JToken[]">[data_factura_json("items").ToArray()]</InArgument>
                                                 </Assign.Value>
                                               </Assign>
-                                              <ui:ForEach x:TypeArguments="njl:JToken" CurrentIndex="{x:Null}" DisplayName="For Each currentItemFactura" sap:VirtualizedContainerService.HintSize="518,904" sap2010:WorkflowViewState.IdRef="ForEach`1_26" Values="[array_results_fact]">
+                                              <ui:ForEach x:TypeArguments="njl:JToken" CurrentIndex="{x:Null}" DisplayName="For Each currentItemFactura" sap:VirtualizedContainerService.HintSize="518,862" sap2010:WorkflowViewState.IdRef="ForEach`1_26" Values="[array_results_fact]">
                                                 <ui:ForEach.Body>
                                                   <ActivityAction x:TypeArguments="njl:JToken">
                                                     <ActivityAction.Argument>
                                                       <DelegateInArgument x:TypeArguments="njl:JToken" Name="currentItemFactura" />
                                                     </ActivityAction.Argument>
-                                                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,767" sap2010:WorkflowViewState.IdRef="Sequence_405">
+                                                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="484,725" sap2010:WorkflowViewState.IdRef="Sequence_405">
                                                       <sap:WorkflowViewStateService.ViewState>
                                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                           <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -2546,7 +2654,7 @@
                                                           </If.Else>
                                                         </If>
                                                       </Sequence>
-                                                      <Sequence DisplayName="Factura Vencida con Saldo" sap:VirtualizedContainerService.HintSize="450,99" sap2010:WorkflowViewState.IdRef="Sequence_387">
+                                                      <Sequence DisplayName="Factura Vencida con Saldo" sap:VirtualizedContainerService.HintSize="450,57" sap2010:WorkflowViewState.IdRef="Sequence_387">
                                                         <sap:WorkflowViewStateService.ViewState>
                                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                                             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
