@@ -4,8 +4,9 @@
   "description": "Proceso en segundo plano",
   "main": "Main.xaml",
   "dependencies": {
-    "UiPath.ConnectionClient": "[2.0.9]",
-    "UiPath.Excel.Activities": "[3.0.1]",
+    "UiPath.ConnectionClient": "[2.0.12]",
+    "UiPath.Excel.Activities": "[3.2.1]",
+    "UiPath.IntegrationService.Activities": "[1.16.0]",
     "UiPath.Mail.Activities": "[2.0.11]",
     "UiPath.MicrosoftOffice365.Activities": "[3.0.14]",
     "UiPath.System.Activities": "[25.4.2]",

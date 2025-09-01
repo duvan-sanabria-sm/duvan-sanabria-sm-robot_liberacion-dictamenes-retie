@@ -12,9 +12,6 @@
       "Path": "Main.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "RUTA_INFORME_ORIGINAL&",
-        "subject&",
-        "htmlBody&",
         "RUTA_INFORME_COPIA&Flowchart_1",
         "NOMBRE_HOJA_INFORME&Flowchart_1",
         "dataTable_resultadosInforme&Flowchart_1",
