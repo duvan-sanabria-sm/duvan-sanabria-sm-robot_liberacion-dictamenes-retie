@@ -23622,7 +23622,11 @@
       "projectName": "LiberacionDictRETIE",
       "projectPath": "C:\\Users\\duvan.sanabria\\OneDrive - Servimeters\\Documentos\\Robotización\\UiPath\\robot_liberacion-dictamenes-retie\\.local",
       "packagesPath": "C:\\Users\\duvan.sanabria\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\duvan.sanabria\\OneDrive - Servimeters\\Documentos\\Robotización\\UiPath\\robot_liberacion-dictamenes-retie\\.local"
+      "outputPath": "C:\\Users\\duvan.sanabria\\OneDrive - Servimeters\\Documentos\\Robotización\\UiPath\\robot_liberacion-dictamenes-retie\\.local",
+      "UsingMicrosoftNETSdk": false,
+      "restoreAuditProperties": {
+        "enableAudit": "False"
+      }
     },
     "frameworks": {
       "net8.0-windows7.0": {
