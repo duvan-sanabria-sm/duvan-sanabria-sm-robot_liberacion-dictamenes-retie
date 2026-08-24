@@ -1,0 +1,6 @@
+{
+  "Name": "LiberacionDictRETIE",
+  "ProjectType": "Process",
+  "Description": "Proceso en segundo plano",
+  "MainFile": "Main.xaml"
+}
