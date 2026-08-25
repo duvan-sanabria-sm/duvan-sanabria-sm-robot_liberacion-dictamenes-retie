@@ -1,0 +1,45 @@
+{
+  "version": "2.0",
+  "resources": [
+    {
+      "activityDisplayName": "Download File",
+      "activityId": "DownloadFileConnections_2",
+      "resource": "Connection",
+      "key": "329b8e0a-2689-4563-8513-3d9900d07a1a",
+      "id": "Connection329b8e0a-2689-4563-8513-3d9900d07a1a329b8e0a-2689-4563-8513-3d9900d07a1aFalse",
+      "value": {
+        "ConnectionId": {
+          "defaultValue": "329b8e0a-2689-4563-8513-3d9900d07a1a",
+          "isExpression": false,
+          "displayName": "Conexión",
+          "description": "La conexión que se va a utilizar"
+        }
+      },
+      "metadata": {
+        "BindingsVersion": "2.1",
+        "Connector": "uipath-microsoft-onedrive",
+        "UseConnectionService": "True"
+      }
+    },
+    {
+      "activityDisplayName": "Enviar correo liberación dictámenes (OAuth)",
+      "activityId": "SendMailConnections_LiberacionDictamenes",
+      "resource": "Connection",
+      "key": "b746ad45-01bd-4f05-bfe8-6284c132303c",
+      "id": "Connectionb746ad45-01bd-4f05-bfe8-6284c132303cb746ad45-01bd-4f05-bfe8-6284c132303cFalse",
+      "value": {
+        "ConnectionId": {
+          "defaultValue": "b746ad45-01bd-4f05-bfe8-6284c132303c",
+          "isExpression": false,
+          "displayName": "Conexión",
+          "description": "La conexión que se va a utilizar"
+        }
+      },
+      "metadata": {
+        "BindingsVersion": "2.1",
+        "Connector": "uipath-microsoft-outlook365",
+        "UseConnectionService": "True"
+      }
+    }
+  ]
+}

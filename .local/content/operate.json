@@ -1,0 +1,26 @@
+{
+  "$schema": "https://cloud.uipath.com/draft/2024-12/operate",
+  "contentType": "Process",
+  "projectId": "5642cfd9-d392-4929-ac5b-d93fcb208ee1",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.ConnectionClient": "[2.0.12]",
+    "UiPath.Excel.Activities": "[3.2.1]",
+    "UiPath.IntegrationService.Activities": "[1.16.0]",
+    "UiPath.Mail.Activities": "[2.0.11]",
+    "UiPath.MicrosoftOffice365.Activities": "[3.0.14]",
+    "UiPath.System.Activities.Runtime": "[25.4.2]",
+    "UiPath.UIAutomation.Activities.Runtime": "[24.10.12]",
+    "UiPath.WebAPI.Activities.Runtime": "[1.21.1]"
+  },
+  "targetFramework": "Windows",
+  "runtimeOptions": {
+    "isAttended": false,
+    "requiresUserInteraction": false,
+    "robotVersion": "26.0.200"
+  },
+  "designOptions": {
+    "projectProfile": "Development",
+    "fileInfoCollection": []
+  }
+}
