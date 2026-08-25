@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kAmSqBZA2r4=",
+  "dgSpecHash": "k7bxgxDCLZU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\duvan.sanabria\\OneDrive - Servimeters\\Documentos\\Robotización\\UiPath\\robot_liberacion-dictamenes-retie\\.local\\",
+  "projectFilePath": "C:\\Users\\duvan.sanabria\\Documents\\Tablero Personal 2026\\Automatizaciones y Software\\Proyectos Ejecutables\\UiPath\\robot_liberacion-dictamenes-retie\\.local\\",
   "expectedPackageFiles": [
     "C:\\Users\\duvan.sanabria\\.nuget\\packages\\avalonedit\\6.1.3.50\\avalonedit.6.1.3.50.nupkg.sha512",
     "C:\\Users\\duvan.sanabria\\.nuget\\packages\\azure.core\\1.18.0\\azure.core.1.18.0.nupkg.sha512",

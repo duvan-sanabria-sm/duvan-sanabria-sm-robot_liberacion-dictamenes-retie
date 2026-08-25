@@ -23620,9 +23620,9 @@
     "restore": {
       "projectUniqueName": "LiberacionDictRETIE",
       "projectName": "LiberacionDictRETIE",
-      "projectPath": "C:\\Users\\duvan.sanabria\\OneDrive - Servimeters\\Documentos\\Robotización\\UiPath\\robot_liberacion-dictamenes-retie\\.local",
+      "projectPath": "C:\\Users\\duvan.sanabria\\Documents\\Tablero Personal 2026\\Automatizaciones y Software\\Proyectos Ejecutables\\UiPath\\robot_liberacion-dictamenes-retie\\.local",
       "packagesPath": "C:\\Users\\duvan.sanabria\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\duvan.sanabria\\OneDrive - Servimeters\\Documentos\\Robotización\\UiPath\\robot_liberacion-dictamenes-retie\\.local",
+      "outputPath": "C:\\Users\\duvan.sanabria\\Documents\\Tablero Personal 2026\\Automatizaciones y Software\\Proyectos Ejecutables\\UiPath\\robot_liberacion-dictamenes-retie\\.local",
       "UsingMicrosoftNETSdk": false,
       "restoreAuditProperties": {
         "enableAudit": "False"
@@ -23672,7 +23672,7 @@
             "version": "[1.21.1, 1.21.1]"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\duvan.sanabria\\AppData\\Local\\Programs\\UiPath\\Studio\\PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\duvan.sanabria\\AppData\\Local\\Programs\\UiPathPlatform\\Studio\\26.0.200-cloud.24635\\SolutionPackager\\Tools\\WorkflowCompiler\\PortableRuntimeIdentifierGraph.json"
       }
     },
     "runtimes": {
