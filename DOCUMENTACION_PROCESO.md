@@ -170,7 +170,7 @@ El robot marca retencion cuando detecta, entre otros casos:
 - El lote encontrado en linea no coincide con el lote evaluado.
 - La factura tiene saldo y esta vencida.
 - La factura tiene saldo y el centro de costo no permite liberar.
-- La factura o proforma esta anulada mediante nota de credito.
+- La factura o proforma esta anulada mediante nota de credito. Para facturas, la retencion por nota de credito solo aplica cuando el mismo lote no tiene ninguna factura con pago real.
 - La informacion encontrada no permite validar correctamente el lote/factura/proforma.
 
 ### 6.3 Resultado escrito en memoria
@@ -371,6 +371,7 @@ Este espacio queda reservado para documentar las mejoras evolutivas del robot. C
 | 2026-08-24 | Buzon de envio de correos | Aplicado | Se requiere que las notificaciones salgan desde el buzon `liberacion.dictamenes@servimeters.com` en lugar de la conexion anterior de tesoreria. | Se reemplazo el envio `SendMailX` del bloque `Use Outlook 365` por `SendMailConnections`, usando el patron del proyecto `robot_transpaso-proformas`: `Mailbox=liberacion.dictamenes@servimeters.com`, `UseSharedMailbox=True` y conexion OAuth base `b746ad45-01bd-4f05-bfe8-6284c132303c`. Si falla por permisos, validar `Send As` del usuario asociado a esa conexion sobre el buzon compartido. |
 | 2026-08-24 | Condicion de envio antes de actualizar estado | Aplicado | En prueba, el Excel maestro podia quedar como `LIBERADO` sin enviar correo porque la bandera `AE` ya venia en `No` y no se reactivaba. | Se cambio la decision de envio para depender del estado financiero final y de `FECHA NOTIFICACION` vacia. Si envia correctamente, escribe fecha/hora en la columna V y luego copia el estado al Excel maestro. |
 | 2026-08-25 | Descarte temprano de dictamenes ya notificados | Aplicado | En prueba se observo que registros con `FECHA NOTIFICACION` diligenciada llegaban hasta `Validar lotes facturados` y consultaban NetSuite aunque ya no debian enviar correo. | Se agrego un filtro inicial sobre la columna V / `CurrentRow(21)` para conservar solo filas con `FECHA NOTIFICACION` vacia antes de validar lotes facturados. |
+| 2026-08-25 | Liberacion de dictamenes con nota credito y factura pagada | Aplicado | Caso reportado: lote `192899` con factura `SM65277` anulada por nota credito y factura `SM66021` pagada. La regla esperada es liberar cuando el lote tenga al menos una factura con pago real. | Se agrego la variable `lote_tiene_factura_pagada_real`, se detecta antes de recorrer las facturas del lote y la regla de `Facturas Anuladas` solo bloquea por nota credito cuando no existe una factura pagada real en el mismo lote. |
 
 ## 14. Analisis de mejora - evitar correos repetidos
 

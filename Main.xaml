@@ -1713,6 +1713,13 @@
                                               <InArgument x:TypeArguments="njl:JToken[]">[data_factura_json("items").ToArray()]</InArgument>
                                             </Assign.Value>
                                           </Assign>
+                                          <ui:InvokeCode ContinueOnError="{x:Null}" Code="Dim tienePagoReal As Boolean = False&#xA;&#xA;For Each item As Newtonsoft.Json.Linq.JToken In facturas&#xA;    Try&#xA;        Dim loteFactura As String = String.Empty&#xA;        Dim pagadoCon As String = String.Empty&#xA;&#xA;        If item(&quot;custrecord_bit_lote&quot;) IsNot Nothing Then&#xA;            loteFactura = item(&quot;custrecord_bit_lote&quot;).ToString()&#xA;        End If&#xA;&#xA;        If item(&quot;custrecord_bit_pagado_con&quot;) IsNot Nothing Then&#xA;            pagadoCon = item(&quot;custrecord_bit_pagado_con&quot;).ToString()&#xA;        End If&#xA;&#xA;        Dim coincideLote As Boolean = False&#xA;        For Each parte As String In loteFactura.Split(&quot;,&quot;c)&#xA;            If parte.Trim().Equals(lote.Trim(), StringComparison.OrdinalIgnoreCase) Then&#xA;                coincideLote = True&#xA;                Exit For&#xA;            End If&#xA;        Next&#xA;&#xA;        If coincideLote AndAlso Not String.IsNullOrWhiteSpace(pagadoCon) AndAlso Not pagadoCon.ToUpperInvariant().Contains(&quot;NOTA DE CR&quot;) Then&#xA;            tienePagoReal = True&#xA;            Exit For&#xA;        End If&#xA;    Catch&#xA;    End Try&#xA;Next&#xA;&#xA;loteTieneFacturaPagadaReal = tienePagoReal" DisplayName="Detectar factura pagada real del lote" sap:VirtualizedContainerService.HintSize="780,201" sap2010:WorkflowViewState.IdRef="InvokeCode_FacturaPagadaRealLote">
+                                            <ui:InvokeCode.Arguments>
+                                              <InArgument x:TypeArguments="njl:JToken[]" x:Key="facturas">[array_results_fact]</InArgument>
+                                              <InArgument x:TypeArguments="x:String" x:Key="lote">[currentItem]</InArgument>
+                                              <OutArgument x:TypeArguments="x:Boolean" x:Key="loteTieneFacturaPagadaReal">[lote_tiene_factura_pagada_real]</OutArgument>
+                                            </ui:InvokeCode.Arguments>
+                                          </ui:InvokeCode>
                                           <ui:ForEach x:TypeArguments="njl:JToken" CurrentIndex="{x:Null}" DisplayName="For Each currentItemFactura" sap:VirtualizedContainerService.HintSize="780,7540" sap2010:WorkflowViewState.IdRef="ForEach`1_26" Values="[array_results_fact]">
                                             <ui:ForEach.Body>
                                               <ActivityAction x:TypeArguments="njl:JToken">
@@ -2675,7 +2682,7 @@
                                                         <x:Boolean x:Key="IsPinned">False</x:Boolean>
                                                       </scg:Dictionary>
                                                     </sap:WorkflowViewStateService.ViewState>
-                                                    <If Condition="[factura_json(&quot;custrecord_bit_pagado_con&quot;).ToString().Contains(&quot;Nota de crédito&quot;)]" sap:VirtualizedContainerService.HintSize="740,3274" sap2010:WorkflowViewState.IdRef="If_91">
+                                                    <If Condition="[factura_json(&quot;custrecord_bit_pagado_con&quot;).ToString().Contains(&quot;Nota de crédito&quot;) And Not lote_tiene_factura_pagada_real]" sap:VirtualizedContainerService.HintSize="740,3274" sap2010:WorkflowViewState.IdRef="If_91">
                                                       <If.Then>
                                                         <Sequence DisplayName="Sequence" sap:VirtualizedContainerService.HintSize="706,2694" sap2010:WorkflowViewState.IdRef="Sequence_401">
                                                           <sap:WorkflowViewStateService.ViewState>
